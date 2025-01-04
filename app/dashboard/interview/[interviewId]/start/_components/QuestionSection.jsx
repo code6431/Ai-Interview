@@ -12,12 +12,15 @@ const QuestionSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
     }
   };
 
+  // Log for debugging the data
+  console.log("mockInterviewQuestion:", mockInterviewQuestion);
+  console.log("activeQuestionIndex:", activeQuestionIndex);
+
   return (
     <div className="p-5 border rounded-lg my-10">
       {/* Question Navigation */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-        {mockInterviewQuestion &&
-          mockInterviewQuestion.length > 0 &&
+        {mockInterviewQuestion && mockInterviewQuestion.length > 0 ? (
           mockInterviewQuestion.map((question, index) => (
             <h2
               key={index}
@@ -27,12 +30,15 @@ const QuestionSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
             >
               Question #{index + 1}
             </h2>
-          ))}
+          ))
+        ) : (
+          <p>No questions available</p>
+        )}
       </div>
 
       {/* Active Question */}
       <h2 className="my-5 text-md md:text-lg">
-        {mockInterviewQuestion?.[activeQuestionIndex]?.question ||
+        {mockInterviewQuestion?.[activeQuestionIndex]?.text ||
           "No question selected."}
       </h2>
 
@@ -40,7 +46,7 @@ const QuestionSection = ({ mockInterviewQuestion, activeQuestionIndex }) => {
       <Volume2
         className="cursor-pointer"
         onClick={() =>
-          textToSpeech(mockInterviewQuestion?.[activeQuestionIndex]?.question)
+          textToSpeech(mockInterviewQuestion?.[activeQuestionIndex]?.text || "")
         }
       />
 
